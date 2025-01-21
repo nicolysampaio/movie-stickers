@@ -22,20 +22,21 @@ public class App {
 
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
         String body = response.body();
-        System.out.println(body);
 
         var parser = new JsonParser();
         List<Map<String, Object>> movieList = parser.parse(body);
 
         for (Map<String, Object> movie : movieList) {
-            String title = (String) movie.getOrDefault("title", "Título não disponível");
+            String title = (String) movie.getOrDefault("title", "Title not available");
             String posterPath = (String) movie.get("poster_path");
-            String posterUrl = posterPath != null ? "https://image.tmdb.org/t/p/w500" + posterPath : "URL do poster não disponível";
-            String rating = String.valueOf(movie.getOrDefault("vote_average", "Avaliação não disponível"));
+            String posterUrl = posterPath != null ? "https://image.tmdb.org/t/p/w500" + posterPath : "Poster not available";
+            String rating = String.valueOf(movie.getOrDefault("vote_average", "Rating not available"));
+            String starEmoji = "⭐";
+            int stars = (int) Math.round(Double.parseDouble(rating));
 
-            System.out.println("Title: " + title);
+            System.out.println("\u001b[34mTitle: " + title);
             System.out.println("Poster Image URL: " + posterUrl);
-            System.out.println("Rating: " + rating);
+            System.out.println("Rating: " + starEmoji.repeat(stars));
             System.out.println();
         }
     }

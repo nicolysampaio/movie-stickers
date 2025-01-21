@@ -15,8 +15,6 @@ public class JsonParser {
     public List<Map<String, Object>> parse(String json) throws IOException {
         Map<String, Object> parsedJson = objectMapper.readValue(json, new TypeReference<>() {});
         Object results = parsedJson.get("results");
-
-        System.out.println(results);
         return objectMapper.convertValue(results, new TypeReference<>() {});
     }
 }
