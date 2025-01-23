@@ -13,8 +13,10 @@ public class JsonParser {
     }
 
     public List<Map<String, Object>> parse(String json) throws IOException {
-        Map<String, Object> parsedJson = objectMapper.readValue(json, new TypeReference<>() {});
+        Map<String, Object> parsedJson = objectMapper.readValue(json, new TypeReference<>() {
+        });
         Object results = parsedJson.get("results");
-        return objectMapper.convertValue(results, new TypeReference<>() {});
+        return objectMapper.convertValue(results, new TypeReference<>() {
+        });
     }
 }

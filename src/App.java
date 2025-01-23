@@ -15,7 +15,7 @@ public class App {
 
         HttpClient client = HttpClient.newHttpClient();
 
-        String apiToken= EnvLoader.get("API_TOKEN");
+        String apiToken = EnvLoader.get("API_TOKEN");
 
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .GET()
@@ -38,8 +38,22 @@ public class App {
             String starEmoji = "⭐";
             int stars = (int) Math.round(Double.parseDouble(rating));
 
+            String comment = "";
+
+            if (stars <= 10 && stars > 8) {
+                comment = "GREAT";
+            } else if (stars <= 8 && stars > 6) {
+                comment = "GOOD";
+            } else if (stars <= 6 && stars > 4) {
+                comment = "REGULAR";
+            } else if (stars <= 4 && stars > 2) {
+                comment = "BAD";
+            } else if (stars <= 2 && stars > 0) {
+                comment = "AWFUL";
+            }
+
             InputStream image = new URL(posterUrl).openStream();
-            generator.create(image, title);
+            generator.create(image, title, comment);
 
             System.out.println("\u001b[34mTitle: " + title);
             System.out.println("Poster Image URL: " + posterUrl);
