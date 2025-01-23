@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -26,6 +28,8 @@ public class App {
         var parser = new JsonParser();
         List<Map<String, Object>> movieList = parser.parse(body);
 
+        StickersGenerator generator = new StickersGenerator();
+
         for (Map<String, Object> movie : movieList) {
             String title = (String) movie.getOrDefault("title", "Title not available");
             String posterPath = (String) movie.get("poster_path");
@@ -34,10 +38,14 @@ public class App {
             String starEmoji = "⭐";
             int stars = (int) Math.round(Double.parseDouble(rating));
 
+            InputStream image = new URL(posterUrl).openStream();
+            generator.create(image, title);
+
             System.out.println("\u001b[34mTitle: " + title);
             System.out.println("Poster Image URL: " + posterUrl);
             System.out.println("Rating: " + starEmoji.repeat(stars));
             System.out.println();
+
         }
     }
 }

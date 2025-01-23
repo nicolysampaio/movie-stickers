@@ -2,11 +2,14 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class StickersGenerator {
-    public  void create() throws IOException {
-        BufferedImage image = ImageIO.read(new File("src/assets/TheShawshankRedemption.jpg"));
+    public  void create(InputStream inputStream, String movieTitle) throws IOException {
+        BufferedImage image = ImageIO.read(inputStream);
 
         int width = image.getWidth();
         int height = image.getHeight();
@@ -24,11 +27,6 @@ public class StickersGenerator {
 
         graphics.drawString("GREAT", 0, newHeight - 100);
 
-        ImageIO.write(newBufferedImage, "png", new File("src/assets/stickers/TheShawshankRedemption.png"));
-    }
-
-    public static void main(String[] args) throws Exception {
-        StickersGenerator generator = new StickersGenerator();
-        generator.create();
+        ImageIO.write(newBufferedImage, "png", new File("src/stickers/" + movieTitle + ".png"));
     }
 }
